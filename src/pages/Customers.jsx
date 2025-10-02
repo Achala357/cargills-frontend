@@ -2,8 +2,11 @@ import CustomerDashboard from "../components/CustomerDashboard";
 
 function Customers() {
   return (
-    <div>
-      <h1>Customers</h1>
+    <div className="page-wrapper">
+      <header className="page-header">
+        <h1 className="page-title">Customers</h1>
+        <p className="page-subtitle">Manage loyalty members, household profiles, and preferences.</p>
+      </header>
       <CustomerDashboard />
     </div>
   );

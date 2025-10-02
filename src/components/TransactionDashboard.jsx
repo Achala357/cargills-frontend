@@ -104,67 +104,85 @@ function TransactionDashboard() {
   };
 
   return (
-    <div>
-      <h2>Transactions</h2>
-      {transactions.length === 0 ? (
-        <p>No transactions found.</p>
-      ) : (
-        <ul>
-          {transactions.map(t => (
-            <li key={t._id}>
-              {t.transaction_id} — Customer: {t.customer_id} — Total: {t.total}
-              <button onClick={() => handleEdit(t)}>Edit</button>
-              <button onClick={() => handleDelete(t._id)}>Delete</button>
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="dashboard-grid">
+      <section className="dashboard-section">
+        <h2 className="section-title">Recent Transactions</h2>
+        <div className="card">
+          {transactions.length === 0 ? (
+            <p className="empty-state">No transactions found.</p>
+          ) : (
+            <ul className="data-list">
+              {transactions.map(t => (
+                <li key={t._id} className="data-card">
+                  <div>
+                    <span className="item-title">{t.transaction_id}</span>
+                    <p className="item-meta">Customer: {t.customer_id}</p>
+                    <p className="item-meta">Total: Rs.{t.total}</p>
+                  </div>
+                  <div className="actions">
+                    <button type="button" className="btn edit-btn" onClick={() => handleEdit(t)}>Edit</button>
+                    <button type="button" className="btn delete-btn" onClick={() => handleDelete(t._id)}>Delete</button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </section>
 
-      <h3>{formData._id ? "Edit Transaction" : "Add Transaction"}</h3>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="transaction_id"
-          placeholder="Transaction ID"
-          value={formData.transaction_id}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="customer_id"
-          placeholder="Customer ID"
-          value={formData.customer_id}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="product_id"
-          placeholder="Product ID"
-          value={formData.product_id}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="number"
-          name="qty"
-          placeholder="Quantity"
-          value={formData.qty}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="number"
-          name="price"
-          placeholder="Price"
-          value={formData.price}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">{formData._id ? "Update Transaction" : "Add Transaction"}</button>
-        {formData._id && <button type="button" onClick={resetForm}>Cancel</button>}
-      </form>
+      <section className="dashboard-section">
+        <h2 className="section-title">{formData._id ? "Edit Transaction" : "Add Transaction"}</h2>
+        <div className="card">
+          <form onSubmit={handleSubmit} className="form-grid">
+            <input
+              type="text"
+              name="transaction_id"
+              placeholder="Transaction ID"
+              value={formData.transaction_id}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="customer_id"
+              placeholder="Customer ID"
+              value={formData.customer_id}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="product_id"
+              placeholder="Product ID"
+              value={formData.product_id}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="number"
+              name="qty"
+              placeholder="Quantity"
+              value={formData.qty}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="number"
+              name="price"
+              placeholder="Price"
+              value={formData.price}
+              onChange={handleChange}
+              required
+            />
+            <div className="actions">
+              <button type="submit" className="btn primary-btn">{formData._id ? "Update Transaction" : "Add Transaction"}</button>
+              {formData._id && (
+                <button type="button" className="btn secondary-btn" onClick={resetForm}>Cancel</button>
+              )}
+            </div>
+          </form>
+        </div>
+      </section>
     </div>
   );
 }

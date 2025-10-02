@@ -78,48 +78,68 @@ function StoreDashboard() {
   };
 
   return (
-    <div>
-      <h2>Stores Dashboard</h2>
+    <div className="dashboard-grid">
+      <section className="dashboard-section">
+        <h2 className="section-title">All Stores</h2>
+        <div className="card">
+          {stores.length === 0 ? (
+            <p className="empty-state">No stores found.</p>
+          ) : (
+            <ul className="data-list">
+              {stores.map((s) => (
+                <li key={s._id} className="data-card">
+                  <div>
+                    <span className="item-title">{s.name}</span>
+                    <p className="item-meta">ID: {s.store_id} • Location: {s.location}</p>
+                  </div>
+                  <div className="actions">
+                    <button type="button" className="btn edit-btn" onClick={() => handleEdit(s)}>Edit</button>
+                    <button type="button" className="btn delete-btn" onClick={() => handleDelete(s._id)}>Delete</button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </section>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="store_id"
-          placeholder="Store ID"
-          value={form.store_id}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="name"
-          placeholder="Store Name"
-          value={form.name}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="location"
-          placeholder="Location"
-          value={form.location}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">{form._id ? "Update Store" : "Add Store"}</button>
-        {form._id && <button type="button" onClick={resetForm}>Cancel</button>}
-      </form>
-
-      <h3>All Stores</h3>
-      <ul>
-        {stores.map((s) => (
-          <li key={s._id}>
-            {s.store_id} — {s.name} ({s.location})
-            <button onClick={() => handleEdit(s)}>Edit</button>
-            <button onClick={() => handleDelete(s._id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      <section className="dashboard-section">
+        <h2 className="section-title">{form._id ? "Edit Store" : "Add Store"}</h2>
+        <div className="card">
+          <form onSubmit={handleSubmit} className="form-grid">
+            <input
+              type="text"
+              name="store_id"
+              placeholder="Store ID"
+              value={form.store_id}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="name"
+              placeholder="Store Name"
+              value={form.name}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="location"
+              placeholder="Location"
+              value={form.location}
+              onChange={handleChange}
+              required
+            />
+            <div className="actions">
+              <button type="submit" className="btn primary-btn">{form._id ? "Update Store" : "Add Store"}</button>
+              {form._id && (
+                <button type="button" className="btn secondary-btn" onClick={resetForm}>Cancel</button>
+              )}
+            </div>
+          </form>
+        </div>
+      </section>
     </div>
   );
 }
