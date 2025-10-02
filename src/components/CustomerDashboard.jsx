@@ -94,82 +94,100 @@ function CustomerDashboard() {
     });
   };
 
-  if (loading) {
-    return <p>Loading customers...</p>;
-  }
-
   return (
-    <div>
-      <h2>Customer List</h2>
-      {customers.length === 0 ? (
-        <p>No customers found.</p>
-      ) : (
-        <ul>
-          {customers.map(c => (
-            <li key={c._id}>
-              <strong>{c.name}</strong> — {c.customer_id} ({c.loyalty_tier})
-              <button onClick={() => handleEdit(c)}>Edit</button>
-              <button onClick={() => handleDelete(c._id)}>Delete</button>
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="dashboard-grid">
+      <section className="dashboard-section">
+        <h2 className="section-title">Customer List</h2>
+        <div className="card">
+          {loading ? (
+            <p className="empty-state">Loading customers...</p>
+          ) : customers.length === 0 ? (
+            <p className="empty-state">No customers found.</p>
+          ) : (
+            <ul className="data-list">
+              {customers.map(c => (
+                <li key={c._id} className="data-card">
+                  <div>
+                    <span className="item-title">{c.name}</span>
+                    <p className="item-meta">ID: {c.customer_id} • Tier: {c.loyalty_tier}</p>
+                    <p className="item-meta">Location: {c.location} • Household Size: {c.household_size}</p>
+                  </div>
+                  <div className="actions">
+                    <button type="button" className="btn edit-btn" onClick={() => handleEdit(c)}>Edit</button>
+                    <button type="button" className="btn delete-btn" onClick={() => handleDelete(c._id)}>Delete</button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </section>
 
-      <h2>{formData._id ? "Edit Customer" : "Add New Customer"}</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="customer_id"
-          placeholder="Customer ID"
-          value={formData.customer_id}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="number"
-          name="age"
-          placeholder="Age"
-          value={formData.age}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="loyalty_tier"
-          placeholder="Loyalty Tier"
-          value={formData.loyalty_tier}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="location"
-          placeholder="Location"
-          value={formData.location}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="number"
-          name="household_size"
-          placeholder="Household Size"
-          value={formData.household_size}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">
-          {formData._id ? "Update Customer" : "Add Customer"}
-        </button>
-        {formData._id && <button onClick={resetForm}>Cancel</button>}
-      </form>
+      <section className="dashboard-section">
+        <h2 className="section-title">{formData._id ? "Edit Customer" : "Add New Customer"}</h2>
+        <div className="card">
+          <form onSubmit={handleSubmit} className="form-grid">
+            <input
+              type="text"
+              name="customer_id"
+              placeholder="Customer ID"
+              value={formData.customer_id}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="number"
+              name="age"
+              placeholder="Age"
+              value={formData.age}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="loyalty_tier"
+              placeholder="Loyalty Tier"
+              value={formData.loyalty_tier}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="location"
+              placeholder="Location"
+              value={formData.location}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="number"
+              name="household_size"
+              placeholder="Household Size"
+              value={formData.household_size}
+              onChange={handleChange}
+              required
+            />
+            <div className="actions">
+              <button type="submit" className="btn primary-btn">
+                {formData._id ? "Update Customer" : "Add Customer"}
+              </button>
+              {formData._id && (
+                <button type="button" className="btn secondary-btn" onClick={resetForm}>
+                  Cancel
+                </button>
+              )}
+            </div>
+          </form>
+        </div>
+      </section>
     </div>
   );
 }

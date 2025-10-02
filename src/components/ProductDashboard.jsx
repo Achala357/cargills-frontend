@@ -92,66 +92,84 @@ function ProductDashboard() {
   };
 
   return (
-    <div>
-      <h2>Products</h2>
-      {products.length === 0 ? (
-        <p>No products found.</p>
-      ) : (
-        <ul>
-          {products.map(p => (
-            <li key={p._id}>
-              {p.product_id} — {p.name} ({p.category}) - {p.price} {p.currency}
-              <button onClick={() => handleEdit(p)}>Edit</button>
-              <button onClick={() => handleDelete(p._id)}>Delete</button>
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="dashboard-grid">
+      <section className="dashboard-section">
+        <h2 className="section-title">Product Catalogue</h2>
+        <div className="card">
+          {products.length === 0 ? (
+            <p className="empty-state">No products found.</p>
+          ) : (
+            <ul className="data-list">
+              {products.map(p => (
+                <li key={p._id} className="data-card">
+                  <div>
+                    <span className="item-title">{p.name}</span>
+                    <p className="item-meta">ID: {p.product_id} • Category: {p.category}</p>
+                    <p className="item-meta">Price: {p.price} {p.currency} • Tags: {p.tags?.join ? p.tags.join(", ") : p.tags}</p>
+                  </div>
+                  <div className="actions">
+                    <button type="button" className="btn edit-btn" onClick={() => handleEdit(p)}>Edit</button>
+                    <button type="button" className="btn delete-btn" onClick={() => handleDelete(p._id)}>Delete</button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </section>
 
-      <h3>{formData._id ? "Edit Product" : "Add Product"}</h3>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="product_id"
-          placeholder="Product ID"
-          value={formData.product_id}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="category"
-          placeholder="Category"
-          value={formData.category}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="number"
-          name="price"
-          placeholder="Price"
-          value={formData.price}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="tags"
-          placeholder="Tags (comma-separated)"
-          value={formData.tags}
-          onChange={handleChange}
-        />
-        <button type="submit">{formData._id ? "Update Product" : "Add Product"}</button>
-        {formData._id && <button type="button" onClick={resetForm}>Cancel</button>}
-      </form>
+      <section className="dashboard-section">
+        <h2 className="section-title">{formData._id ? "Edit Product" : "Add Product"}</h2>
+        <div className="card">
+          <form onSubmit={handleSubmit} className="form-grid">
+            <input
+              type="text"
+              name="product_id"
+              placeholder="Product ID"
+              value={formData.product_id}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="category"
+              placeholder="Category"
+              value={formData.category}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="number"
+              name="price"
+              placeholder="Price"
+              value={formData.price}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="tags"
+              placeholder="Tags (comma-separated)"
+              value={formData.tags}
+              onChange={handleChange}
+            />
+            <div className="actions">
+              <button type="submit" className="btn primary-btn">{formData._id ? "Update Product" : "Add Product"}</button>
+              {formData._id && (
+                <button type="button" className="btn secondary-btn" onClick={resetForm}>Cancel</button>
+              )}
+            </div>
+          </form>
+        </div>
+      </section>
     </div>
   );
 }
