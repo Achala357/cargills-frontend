@@ -21,7 +21,7 @@ function App() {
     <Router>
       <div className="app-container">
         <aside className="sidebar">
-          <img src="/cargills-logo.png" alt="Cargills Logo" className="h-12 mx-auto my-4" />
+          <img src="/cargillslogo.png" alt="Cargills Logo" className="h-12 mx-auto my-4" />
           <h1 className="sidebar-title">Cargills Insights</h1>
           <nav className="sidebar-nav">
             {navLinks.map((link) => (
