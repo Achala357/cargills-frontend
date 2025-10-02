@@ -65,155 +65,313 @@ function AnalyticsPage() {
   const colors = ["#D32F2F", "#FF5252", "#C62828", "#FF7043", "#E53935"];
 
   return (
-    <div className="analytics-page">
-      <h1>Cargills Retail Analytics Dashboard</h1>
+    <div className="min-h-screen bg-gradient-to-br from-red-100 via-white to-red-50 text-gray-900">
+      <div className="mx-auto max-w-7xl px-6 py-12 space-y-10">
+        <header className="text-center space-y-3">
+          <p className="inline-block rounded-full border border-red-200 bg-white px-4 py-1 text-sm font-semibold uppercase tracking-[0.35em] text-red-600 shadow-sm">
+            Analytics
+          </p>
+          <h1 className="text-3xl font-bold text-red-700 sm:text-4xl">
+            Cargills Retail Analytics Dashboard
+          </h1>
+          <p className="text-base text-gray-600 max-w-3xl mx-auto">
+            Monitor loyalty trends, store performance, and customer engagement with a cohesive Cargills-inspired visual experience.
+          </p>
+        </header>
 
-      {/* 1. Loyalty Tier Distribution */}
-      <h2>Loyalty Tier Distribution</h2>
-      <ResponsiveContainer width="100%" height={300}>
-        <PieChart>
-          <Pie data={tierCount} dataKey="count" nameKey="_id" outerRadius={120} label>
-            {tierCount.map((entry, i) => <Cell key={i} fill={colors[i % colors.length]} />)}
-          </Pie>
-          <Tooltip />
-          <Legend />
-        </PieChart>
-      </ResponsiveContainer>
+        <div className="grid grid-cols-1 gap-8 xl:grid-cols-2">
+          {/* 1. Loyalty Tier Distribution */}
+          <section className="bg-white border border-red-100 rounded-2xl shadow-xl shadow-red-100/40 p-6 space-y-6">
+            <div>
+              <h2 className="text-xl font-semibold text-red-700">Loyalty Tier Distribution</h2>
+              <p className="text-sm text-gray-500">Understand how members are segmented across loyalty tiers.</p>
+            </div>
+            <div className="h-72">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie data={tierCount} dataKey="count" nameKey="_id" outerRadius={120} label>
+                    {tierCount.map((entry, i) => <Cell key={i} fill={colors[i % colors.length]} />)}
+                  </Pie>
+                  <Tooltip contentStyle={{ borderRadius: "12px", borderColor: "#fca5a5" }} />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </section>
 
-      {/* 2. Total Sales by Store */}
-      <h2>Total Sales by Store</h2>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={salesByStore}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="_id" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="totalSales" fill="#D32F2F" />
-        </BarChart>
-      </ResponsiveContainer>
+          {/* 2. Total Sales by Store */}
+          <section className="bg-white border border-red-100 rounded-2xl shadow-xl shadow-red-100/40 p-6 space-y-6">
+            <div>
+              <h2 className="text-xl font-semibold text-red-700">Total Sales by Store</h2>
+              <p className="text-sm text-gray-500">Track how each store is performing across the network.</p>
+            </div>
+            <div className="h-72">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={salesByStore}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#fecaca" />
+                  <XAxis dataKey="_id" stroke="#b91c1c" tick={{ fill: "#7f1d1d" }} />
+                  <YAxis stroke="#b91c1c" tick={{ fill: "#7f1d1d" }} />
+                  <Tooltip contentStyle={{ borderRadius: "12px", borderColor: "#fca5a5" }} />
+                  <Legend />
+                  <Bar dataKey="totalSales" fill="#D32F2F" radius={[6, 6, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </section>
 
-      {/* 3. Top 5 Best-Selling Products */}
-      <h2>Top 5 Best-Selling Products</h2>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={topProducts}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="_id" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="totalQty" fill="#FF7043" />
-        </BarChart>
-      </ResponsiveContainer>
+          {/* 3. Top 5 Best-Selling Products */}
+          <section className="bg-white border border-red-100 rounded-2xl shadow-xl shadow-red-100/40 p-6 space-y-6">
+            <div>
+              <h2 className="text-xl font-semibold text-red-700">Top 5 Best-Selling Products</h2>
+              <p className="text-sm text-gray-500">Identify products that consistently drive the highest sales.</p>
+            </div>
+            <div className="h-72">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={topProducts}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#fecaca" />
+                  <XAxis dataKey="_id" stroke="#b91c1c" tick={{ fill: "#7f1d1d" }} />
+                  <YAxis stroke="#b91c1c" tick={{ fill: "#7f1d1d" }} />
+                  <Tooltip contentStyle={{ borderRadius: "12px", borderColor: "#fca5a5" }} />
+                  <Legend />
+                  <Bar dataKey="totalQty" fill="#FF7043" radius={[6, 6, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </section>
 
-      {/* 4. Avg Basket Size by Tier */}
-      <h2>Average Basket Size by Loyalty Tier</h2>
-      <table border="1" cellPadding="8">
-        <thead>
-          <tr><th>Loyalty Tier</th><th>Avg Items</th></tr>
-        </thead>
-        <tbody>
-          {avgBasket.map((b, i) => (
-            <tr key={i}><td>{b._id}</td><td>{b.avgItems.toFixed(2)}</td></tr>
-          ))}
-        </tbody>
-      </table>
+          {/* 4. Avg Basket Size by Tier */}
+          <section className="bg-white border border-red-100 rounded-2xl shadow-xl shadow-red-100/40 p-6 space-y-6">
+            <div>
+              <h2 className="text-xl font-semibold text-red-700">Average Basket Size by Loyalty Tier</h2>
+              <p className="text-sm text-gray-500">Compare how basket sizes differ between loyalty tiers.</p>
+            </div>
+            <div className="overflow-hidden rounded-xl border border-red-100">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-red-200 text-left text-sm">
+                  <thead className="bg-red-600 text-white">
+                    <tr>
+                      <th className="px-4 py-3 font-semibold uppercase tracking-wide">Loyalty Tier</th>
+                      <th className="px-4 py-3 font-semibold uppercase tracking-wide text-right">Avg Items</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-red-100">
+                    {avgBasket.map((b, i) => (
+                      <tr key={i} className="odd:bg-white even:bg-red-50/60 hover:bg-red-100/60 transition-colors">
+                        <td className="px-4 py-3 font-medium text-gray-700">{b._id}</td>
+                        <td className="px-4 py-3 text-right text-gray-700">{b.avgItems.toFixed(2)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
 
-      {/* 5. Top Spending Customers */}
-      <h2>Top Spending Customers</h2>
-      <table border="1" cellPadding="8">
-        <thead>
-          <tr><th>Customer</th><th>Total Spend</th></tr>
-        </thead>
-        <tbody>
-          {topSpenders.map((s, i) => (
-            <tr key={i}><td>{s._id}</td><td>{s.totalSpend}</td></tr>
-          ))}
-        </tbody>
-      </table>
+          {/* 5. Top Spending Customers */}
+          <section className="bg-white border border-red-100 rounded-2xl shadow-xl shadow-red-100/40 p-6 space-y-6">
+            <div>
+              <h2 className="text-xl font-semibold text-red-700">Top Spending Customers</h2>
+              <p className="text-sm text-gray-500">Spotlight the customers driving the greatest value.</p>
+            </div>
+            <div className="overflow-hidden rounded-xl border border-red-100">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-red-200 text-left text-sm">
+                  <thead className="bg-red-600 text-white">
+                    <tr>
+                      <th className="px-4 py-3 font-semibold uppercase tracking-wide">Customer</th>
+                      <th className="px-4 py-3 font-semibold uppercase tracking-wide text-right">Total Spend</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-red-100">
+                    {topSpenders.map((s, i) => (
+                      <tr key={i} className="odd:bg-white even:bg-red-50/60 hover:bg-red-100/60 transition-colors">
+                        <td className="px-4 py-3 font-medium text-gray-700">{s._id}</td>
+                        <td className="px-4 py-3 text-right text-gray-700">{s.totalSpend}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
 
-      {/* 6. Category Spend per Customer */}
-      <h2>Category Spend per Customer</h2>
-      <table border="1" cellPadding="8">
-        <thead>
-          <tr><th>Customer</th><th>Category</th><th>Spend</th></tr>
-        </thead>
-        <tbody>
-          {categorySpend.slice(0, 20).map((c, i) => (
-            <tr key={i}><td>{c._id.customer}</td><td>{c._id.category}</td><td>{c.spend}</td></tr>
-          ))}
-        </tbody>
-      </table>
+          {/* 6. Category Spend per Customer */}
+          <section className="bg-white border border-red-100 rounded-2xl shadow-xl shadow-red-100/40 p-6 space-y-6">
+            <div>
+              <h2 className="text-xl font-semibold text-red-700">Category Spend per Customer</h2>
+              <p className="text-sm text-gray-500">Explore category preferences for targeted promotions.</p>
+            </div>
+            <div className="overflow-hidden rounded-xl border border-red-100">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-red-200 text-left text-sm">
+                  <thead className="bg-red-600 text-white">
+                    <tr>
+                      <th className="px-4 py-3 font-semibold uppercase tracking-wide">Customer</th>
+                      <th className="px-4 py-3 font-semibold uppercase tracking-wide">Category</th>
+                      <th className="px-4 py-3 font-semibold uppercase tracking-wide text-right">Spend</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-red-100">
+                    {categorySpend.slice(0, 20).map((c, i) => (
+                      <tr key={i} className="odd:bg-white even:bg-red-50/60 hover:bg-red-100/60 transition-colors">
+                        <td className="px-4 py-3 font-medium text-gray-700">{c._id.customer}</td>
+                        <td className="px-4 py-3 text-gray-700">{c._id.category}</td>
+                        <td className="px-4 py-3 text-right text-gray-700">{c.spend}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
 
-      {/* 7. Store-Level Category Demand */}
-      <h2>Store-Level Category Demand</h2>
-      <table border="1" cellPadding="8">
-        <thead>
-          <tr><th>Store</th><th>Category</th><th>Total Qty</th></tr>
-        </thead>
-        <tbody>
-          {storeCategory.slice(0, 20).map((sc, i) => (
-            <tr key={i}><td>{sc._id.store}</td><td>{sc._id.category}</td><td>{sc.totalQty}</td></tr>
-          ))}
-        </tbody>
-      </table>
+          {/* 7. Store-Level Category Demand */}
+          <section className="bg-white border border-red-100 rounded-2xl shadow-xl shadow-red-100/40 p-6 space-y-6">
+            <div>
+              <h2 className="text-xl font-semibold text-red-700">Store-Level Category Demand</h2>
+              <p className="text-sm text-gray-500">Analyze how category demand shifts between stores.</p>
+            </div>
+            <div className="overflow-hidden rounded-xl border border-red-100">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-red-200 text-left text-sm">
+                  <thead className="bg-red-600 text-white">
+                    <tr>
+                      <th className="px-4 py-3 font-semibold uppercase tracking-wide">Store</th>
+                      <th className="px-4 py-3 font-semibold uppercase tracking-wide">Category</th>
+                      <th className="px-4 py-3 font-semibold uppercase tracking-wide text-right">Total Qty</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-red-100">
+                    {storeCategory.slice(0, 20).map((sc, i) => (
+                      <tr key={i} className="odd:bg-white even:bg-red-50/60 hover:bg-red-100/60 transition-colors">
+                        <td className="px-4 py-3 font-medium text-gray-700">{sc._id.store}</td>
+                        <td className="px-4 py-3 text-gray-700">{sc._id.category}</td>
+                        <td className="px-4 py-3 text-right text-gray-700">{sc.totalQty}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
 
-      {/* 8. Churn Risk Customers */}
-      <h2>Churn Risk Customers (No Purchase in 60 Days)</h2>
-      <ul>
-        {churnRisk.map((c, i) => <li key={i}>{c._id} — Last Purchase: {new Date(c.lastPurchase).toDateString()}</li>)}
-      </ul>
+          {/* 8. Churn Risk Customers */}
+          <section className="bg-white border border-red-100 rounded-2xl shadow-xl shadow-red-100/40 p-6 space-y-6">
+            <div>
+              <h2 className="text-xl font-semibold text-red-700">Churn Risk Customers</h2>
+              <p className="text-sm text-gray-500">Customers with no purchase activity in the past 60 days.</p>
+            </div>
+            <ul className="space-y-3 text-sm text-gray-700">
+              {churnRisk.map((c, i) => (
+                <li
+                  key={i}
+                  className="flex items-center justify-between rounded-xl border border-red-100 bg-red-50/40 px-4 py-3 shadow-sm shadow-red-100/50"
+                >
+                  <span className="font-semibold text-red-700">{c._id}</span>
+                  <span className="text-gray-600">Last Purchase: {new Date(c.lastPurchase).toDateString()}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
 
-      {/* 9. Dairy Buyers (Simple Cross-Sell Proxy) */}
-      <h2>Customers Who Bought Dairy Products</h2>
-      <ul>
-        {dairyBuyers.map((d, i) => (
-          <li key={i}>{d.customer_id} — Transaction {d.transaction_id}</li>
-        ))}
-      </ul>
+          {/* 9. Dairy Buyers (Simple Cross-Sell Proxy) */}
+          <section className="bg-white border border-red-100 rounded-2xl shadow-xl shadow-red-100/40 p-6 space-y-6">
+            <div>
+              <h2 className="text-xl font-semibold text-red-700">Customers Who Bought Dairy Products</h2>
+              <p className="text-sm text-gray-500">Useful for cross-selling and bundle opportunities.</p>
+            </div>
+            <ul className="space-y-3 text-sm text-gray-700">
+              {dairyBuyers.map((d, i) => (
+                <li
+                  key={i}
+                  className="flex items-center justify-between rounded-xl border border-red-100 bg-red-50/40 px-4 py-3 shadow-sm shadow-red-100/50"
+                >
+                  <span className="font-semibold text-red-700">{d.customer_id}</span>
+                  <span className="text-gray-600">Transaction {d.transaction_id}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
 
-      {/* 10. Price Sensitivity by Tier */}
-      <h2>Price Sensitivity by Loyalty Tier</h2>
-      <table border="1" cellPadding="8">
-        <thead>
-          <tr><th>Loyalty Tier</th><th>Avg Price per Item</th></tr>
-        </thead>
-        <tbody>
-          {priceSensitivity.map((p, i) => (
-            <tr key={i}><td>{p._id}</td><td>{p.avgPrice.toFixed(2)}</td></tr>
-          ))}
-        </tbody>
-      </table>
+          {/* 10. Price Sensitivity by Tier */}
+          <section className="bg-white border border-red-100 rounded-2xl shadow-xl shadow-red-100/40 p-6 space-y-6">
+            <div>
+              <h2 className="text-xl font-semibold text-red-700">Price Sensitivity by Loyalty Tier</h2>
+              <p className="text-sm text-gray-500">Gauge how average item prices shift by loyalty tier.</p>
+            </div>
+            <div className="overflow-hidden rounded-xl border border-red-100">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-red-200 text-left text-sm">
+                  <thead className="bg-red-600 text-white">
+                    <tr>
+                      <th className="px-4 py-3 font-semibold uppercase tracking-wide">Loyalty Tier</th>
+                      <th className="px-4 py-3 font-semibold uppercase tracking-wide text-right">Avg Price per Item</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-red-100">
+                    {priceSensitivity.map((p, i) => (
+                      <tr key={i} className="odd:bg-white even:bg-red-50/60 hover:bg-red-100/60 transition-colors">
+                        <td className="px-4 py-3 font-medium text-gray-700">{p._id}</td>
+                        <td className="px-4 py-3 text-right text-gray-700">{p.avgPrice.toFixed(2)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
 
-      {/* 11. Household Size vs Basket Value */}
-      <h2>Household Size vs Basket Value</h2>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={householdBasket}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="_id" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="avgSpend" fill="#C62828" />
-        </BarChart>
-      </ResponsiveContainer>
+          {/* 11. Household Size vs Basket Value */}
+          <section className="bg-white border border-red-100 rounded-2xl shadow-xl shadow-red-100/40 p-6 space-y-6">
+            <div>
+              <h2 className="text-xl font-semibold text-red-700">Household Size vs Basket Value</h2>
+              <p className="text-sm text-gray-500">Assess how household size correlates with basket spending.</p>
+            </div>
+            <div className="h-72">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={householdBasket}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#fecaca" />
+                  <XAxis dataKey="_id" stroke="#b91c1c" tick={{ fill: "#7f1d1d" }} />
+                  <YAxis stroke="#b91c1c" tick={{ fill: "#7f1d1d" }} />
+                  <Tooltip contentStyle={{ borderRadius: "12px", borderColor: "#fca5a5" }} />
+                  <Legend />
+                  <Bar dataKey="avgSpend" fill="#C62828" radius={[6, 6, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </section>
 
-      {/* 12. Customer Lifetime Value */}
-      <h2>Customer Lifetime Value (Top 10)</h2>
-      <table border="1" cellPadding="8">
-        <thead>
-          <tr><th>Customer</th><th>Lifetime Spend</th><th>Transactions</th></tr>
-        </thead>
-        <tbody>
-          {clv.slice(0, 10).map((c, i) => (
-            <tr key={i}>
-              <td>{c._id}</td>
-              <td>{c.lifetimeSpend}</td>
-              <td>{c.txCount}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+          {/* 12. Customer Lifetime Value */}
+          <section className="bg-white border border-red-100 rounded-2xl shadow-xl shadow-red-100/40 p-6 space-y-6 xl:col-span-2">
+            <div>
+              <h2 className="text-xl font-semibold text-red-700">Customer Lifetime Value (Top 10)</h2>
+              <p className="text-sm text-gray-500">Highlighting long-term customer contributions.</p>
+            </div>
+            <div className="overflow-hidden rounded-xl border border-red-100">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-red-200 text-left text-sm">
+                  <thead className="bg-red-600 text-white">
+                    <tr>
+                      <th className="px-4 py-3 font-semibold uppercase tracking-wide">Customer</th>
+                      <th className="px-4 py-3 font-semibold uppercase tracking-wide text-right">Lifetime Spend</th>
+                      <th className="px-4 py-3 font-semibold uppercase tracking-wide text-right">Transactions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-red-100">
+                    {clv.slice(0, 10).map((c, i) => (
+                      <tr key={i} className="odd:bg-white even:bg-red-50/60 hover:bg-red-100/60 transition-colors">
+                        <td className="px-4 py-3 font-medium text-gray-700">{c._id}</td>
+                        <td className="px-4 py-3 text-right text-gray-700">{c.lifetimeSpend}</td>
+                        <td className="px-4 py-3 text-right text-gray-700">{c.txCount}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
     </div>
   );
 }
